@@ -85,15 +85,14 @@ mongodb:
       prometheus.io/port: "9216"
     serviceMonitor:
       enabled: true
-
+      namespace: monitoring
 
 replicaCount: 2
 
 image:
   repository: web3f
+  tag: latest
   pullPolicy: IfNotPresent
-
-imagePullSecrets: []
 
 serviceAccount:
   # Specifies whether a service account should be created

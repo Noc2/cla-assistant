@@ -16,7 +16,7 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
-          command: docker build -t web3f/cla-assistant .
+          command: /scripts/build-image.sh web3f/cla-assistant .
 
   publishImage:
     docker:
@@ -34,7 +34,17 @@ jobs:
       - checkout
       - run:
           command: |
-            helm template ./charts/cla-assistant/.
+            helm lint ./charts/cla-assistant/.
+      - run:
+          command: |
+            helm install --dry-run --debug --generate-name ./charts/cla-assistant/.
+      - run:
+          command: |
+            helm install budapest-acipenser ./charts/cla-assistant/.
+      - run:
+          command: |
+            helm test budapest-acipenser
+
 
   integrationTests:
     docker:
