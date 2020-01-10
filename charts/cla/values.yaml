@@ -91,6 +91,11 @@ mongodb:
     serviceMonitor:
       enabled: true
 
+prometheus-mongodb-exporter:
+  mongodb:
+    uri: mongodb://user:pass@host1:port/database
+
+
 replicaCount: 2
 
 serviceAccount:
