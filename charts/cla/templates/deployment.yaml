@@ -25,42 +25,42 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: web3f/cla-assistant:0.0.1
+          imagePullPolicy: IfNotPresent
           env:
           - name: HOST
             value: {{ .Values.claAssistant.host }}
-          - name: PORT
-            value: {{ .Values.claAssistant.port | default 80 }}
-          - name: HOST_PORT
-            value: {{ .Values.claAssistant.hostPort | default 8080 }}
+          - name: GITHUB_CLIENT
+            value: {{ .Values.github.client | default "CLIENT" }}
+          - name: GITHUB_USER
+            value: {{ .Values.github.user | default "USER" }}
           - name: PROTOCOL
             value: {{ .Values.claAssistant.protocol | default "http" }}
-          - name: GITHUB_CLIENT
-            value: {{ .Values.githubClient | default "CLIENT" }}
+          - name: PORT
+            value: {{ .Values.claAssistant.port | quote | default "80" }}
+          - name: HOST_PORT
+            value: {{ .Values.claAssistant.hostPort | quote | default "8080" }}
+          - name: GITHUB_ADMIN_USERS
+            value: {{ .Values.github.user | default "GITHUB_ADMIN_USERS" }}
           - name: GITHUB_SECRET
             valueFrom:
               secretKeyRef:
-                name: github-credentials
+                name: '{{ template "cla.fullname" . }}-github-credentials'
                 key: secret
-          - name: GITHUB_USER
-            value: "Hello from the environment"
           - name: GITHUB_PASS
             valueFrom:
               secretKeyRef:
-                name: github-credentials
+                name: '{{ template "cla.fullname" . }}-github-credentials'
                 key: pass
           - name: GITHUB_TOKEN
             valueFrom:
               secretKeyRef:
-                name: github-credentials
+                name: '{{ template "cla.fullname" . }}-github-credentials'
                 key: token
-          - name: GITHUB_ADMIN_USERS
-            value: "Such a sweet sorrow"
           - name: MONGODB
             valueFrom:
               secretKeyRef:
-                name: mongodb credentials
+                name: '{{ template "cla.fullname" . }}-mongodb-credentials'
                 key: uri
           ports:
             - name: http

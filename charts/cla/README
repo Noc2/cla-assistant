@@ -1,3 +1,11 @@
+
+Will produce:
+Error: unable to build kubernetes objects from release manifest: unable to recognize "": no matches for kind "ServiceMonitor" in version "monitoring.coreos.com/v1"
+
+Requires prometheus to be installed
+
+
+
 helm install -n cla --set \
 claAssistant.host=$CLA_ASSISTANT_HOST,\
 claAssistant.port=$CLA_ASSISTANT_PORT,\

@@ -4,17 +4,19 @@
 
 claAssistant:
   host: "adasdad"
-  port: "23"
-  hostPort: "80"
+  port: 23
+  hostPort: 80
   protocol: "http"
 
 github:
+  client:
+  user:
   secret: "a3da5d4a65ds"
   password: "a3da5d4a65ds"
   token: "a3da5d4a65ds"
 
 mongodb:
-  mongodbRootPassword:
+  mongodbRootPassword: "LKDJLKJDSKLJASKLJD"
   service:
     port: 56985
   mongodbUsername: mongol
@@ -82,14 +84,8 @@ mongodb:
       prometheus.io/port: "9216"
     serviceMonitor:
       enabled: true
-      namespace: monitoring
 
-replicaCount: 2
-
-image:
-  repository: web3f
-  tag: latest
-  pullPolicy: IfNotPresent
+replicaCount: 1
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -139,3 +135,8 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true
