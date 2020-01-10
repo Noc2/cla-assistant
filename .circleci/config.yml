@@ -1,14 +1,6 @@
 version: 2
 
 jobs:
-  lint:
-    docker:
-      - image: circleci/node:12
-    steps:
-      - checkout
-      - run: yarn
-      - run: yarn lint
-
   buildImage:
     docker:
       - image: web3f/ci-commons:v1.7.1
@@ -37,9 +29,6 @@ jobs:
             helm lint ./charts/cla-assistant/.
       - run:
           command: |
-            helm install --dry-run --debug --generate-name ./charts/cla-assistant/.
-      - run:
-          command: |
             helm install budapest-acipenser ./charts/cla-assistant/.
       - run:
           command: |
@@ -51,6 +40,10 @@ jobs:
       - image: web3f/ci-commons:v1.7.1
     steps:
       - checkout
+      - setup_remote_docker
+      - run:
+          command: |
+            ./scripts/integration-tests.sh
 
   publishChart:
     docker:
@@ -75,10 +68,6 @@ workflows:
   version: 2
   test_and_deploy:
     jobs:
-      - lint:
-          filters:
-            tags:
-              only: /.*/
       - buildImage:
       - publishImage:
         requires:
