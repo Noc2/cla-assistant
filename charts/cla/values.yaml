@@ -3,10 +3,10 @@
 # Declare variables to be passed into your templates.
 
 claAssistant:
-  host:
-  port:
-  hostPort:
-  protocol:
+  host: "adasdad"
+  port: "23"
+  hostPort: "80"
+  protocol: "http"
 
 github:
   secret: "a3da5d4a65ds"
@@ -28,9 +28,6 @@ mongodb:
     pdb:
       enabled: true
       minAvailable:
-        secondary: 1
-        arbiter: 1
-      maxUnavailable:
         secondary: 1
         arbiter: 1
   resourcesArbiter:
