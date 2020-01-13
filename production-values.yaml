@@ -9,26 +9,28 @@ image:
 
 
 claAssistant:
-  host: "adasdad"
-  port: 23
-  hostPort: 80
-  protocol: "http"
+  host:
+  port:
+  hostPort:
+  protocol:
 
 github:
   client:
   user:
-  secret: "a3da5d4a65ds"
-  password: "a3da5d4a65ds"
-  token: "a3da5d4a65ds"
+  secret:
+  password:
+  token:
 
 mongodb:
-  mongodbRootPassword: "LKDJLKJDSKLJASKLJD"
+  ## MongoDB admin password
+  ## ref: https://github.com/bitnami/bitnami-docker-mongodb/blob/master/README.md#setting-the-root-password-on-first-run
+  ##
+  mongodbRootPassword:
   service:
     port: 56985
-  mongodbUsername: mongol
-  mongodbPassword: "password"
-  mongodbDatabase: cla
-
+  mongodbUsername:
+  mongodbPassword:
+  mongodbDatabase:
   replicaSet:
     enabled: true
     replicas:
@@ -93,7 +95,7 @@ mongodb:
       enabled: true
 prometheus-mongodb-exporter:
   mongodb:
-    uri: mongodb://user:pass@host1:port/database
+    uri:
 
 
 replicaCount: 2
