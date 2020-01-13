@@ -1,6 +1,7 @@
 # Default values for cla-assistant.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+domain: cla
 
 image:
   repository: web3f

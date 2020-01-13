@@ -1,0 +1,17 @@
+{{ if ne .Values.environment "ci" }}
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: {{ include "cla.fullname" . }}
+spec:
+  secretName: {{ include "cla.fullname" . }}-tls
+  issuerRef:
+    name: letsencrypt
+  dnsNames:
+    cla.{{ .Values.domain }}
+  acme:
+    config:
+    - dns01:
+        provider: prod-dns
+      domains: cla.{{ .Values.domain }}
+{{ end }}
