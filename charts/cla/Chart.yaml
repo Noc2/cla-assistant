@@ -25,9 +25,3 @@ dependencies:
     version: 7.x
     repository: https://kubernetes-charts.storage.googleapis.com/
     condition: mongodb.enabled
-
-  - name: prometheus-mongodb-exporter
-    namespace: monitoring
-    version: 2.4.0
-    repository: https://kubernetes-charts.storage.googleapis.com/
-    condition: mongodbExporter.enabled

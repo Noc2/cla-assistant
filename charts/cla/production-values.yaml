@@ -7,7 +7,6 @@ image:
   tag: 0.0.1
   pullPolicy: IfNotPresent
 
-production: true
 
 claAssistant:
   host: "adasdad"
@@ -66,12 +65,38 @@ mongodb:
     failureThreshold: 6
     successThreshold: 1
 
+  metrics:
+    enabled: true
+    image:
+      registry: docker.io
+      repository: bitnami/mongodb-exporter
+      tag: 0.10.0-debian-9-r77
+      pullPolicy: IfNotPresent
+    livenessProbe:
+      enabled: true
+      initialDelaySeconds: 15
+      periodSeconds: 5
+      timeoutSeconds: 5
+      failureThreshold: 3
+      successThreshold: 1
+    readinessProbe:
+      enabled: true
+      initialDelaySeconds: 5
+      periodSeconds: 5
+      timeoutSeconds: 1
+      failureThreshold: 3
+      successThreshold: 1
+    podAnnotations:
+      prometheus.io/scrape: "true"
+      prometheus.io/port: "9216"
+    serviceMonitor:
+      enabled: true
 prometheus-mongodb-exporter:
   mongodb:
     uri: mongodb://user:pass@host1:port/database
 
 
-replicaCount: 1
+replicaCount: 2
 
 serviceAccount:
   create: true
@@ -90,6 +115,6 @@ resources:
     memory: 128Mi
 
 metrics:
-  enabled: false
+  enabled: true
   serviceMonitor:
-    enabled: false
+    enabled: true
