@@ -1,4 +1,5 @@
 helm install --set \
+environment="ci",\
 claAssistant.host="CLA_ASSISTANT_HOST",\
 claAssistant.protocol="http",\
 claAssistant.port=80,\

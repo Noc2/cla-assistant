@@ -8,10 +8,10 @@ spec:
   issuerRef:
     name: letsencrypt
   dnsNames:
-    cla.{{ .Values.domain }}
+    {{ .Values.claAssistant.host }}
   acme:
     config:
     - dns01:
         provider: prod-dns
-      domains: cla.{{ .Values.domain }}
+      domains: {{ .Values.claAssistant.host }}
 {{ end }}
