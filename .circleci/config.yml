@@ -16,33 +16,8 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
-          command: /scripts/build-image.sh web3f/cla-assistant .
-
-  publishImage:
-    docker:
-      - image: web3f/ci-commons:v1.7.1
-    steps:
-      - checkout
-      - setup_remote_docker
-      - run:
-          command: /scripts/publish-image.sh web3f/cla-assistant
-
-  testChart:
-    docker:
-      - image: web3f/ci-commons:v1.7.1
-    steps:
-      - checkout
-      - setup_remote_docker
-      - run:
           command: |
-            helm lint ./charts/cla-assistant/.
-      - run:
-          command: |
-            helm install budapest-acipenser ./charts/cla-assistant/.
-      - run:
-          command: |
-            helm test budapest-acipenser
-
+            /scripts/build-image.sh web3f/cla-assistant .
 
   integrationTests:
     docker:
@@ -51,24 +26,19 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
+          description: run integration tests
           command: |
-          helm install --dry-run --generate-name --set \
-          claAssistant.host="CLA_ASSISTANT_HOST",\
-          claAssistant.protocol="http",\
-          claAssistant.port=80,\
-          claAssistant.hostPort=80,\
-          github.secret="GITHUB_SECRET",\
-          github.password="GITHUB_PASSWORD",\
-          github.token="GITHUB_TOKEN",\
-          mongodb.mongodbRootPassword="MONGODB_ROOT_PASSWORD",\
-          mongodb.mongodbUsername="MONGODB_USERNAME",\
-          mongodb.mongodbPassword="MONGODB_PASSWORD",\
-          mongodb.mongodbDatabase="MONGODB_DATABASE" \
-          ./charts/cla-assistant/.
+            /scripts/integration-tests.sh
 
+  publishImage:
+    docker:
+      - image: web3f/ci-commons:v1.7.1
+    steps:
+      - checkout
+      - setup_remote_docker
       - run:
           command: |
-            ./scripts/integration-tests.sh
+            /scripts/publish-image.sh web3f/cla-assistant
 
   publishChart:
     docker:
@@ -76,8 +46,9 @@ jobs:
     steps:
       - checkout
       - run:
-           command: |
-             /scripts/publish-chart.sh
+          command: |
+            /scripts/publish-chart.sh
+
   deploy:
     docker:
       - image: web3f/ci-commons:v1.7.1
@@ -93,16 +64,46 @@ workflows:
   version: 2
   test_and_deploy:
     jobs:
+      - lint:
+          filters:
+            tags:
+              only: /.*/
       - buildImage:
-      - publishImage:
-        requires:
-          - buildImage
-      - testChart:
-        requires:
-          - publishImage
+          filters:
+            tags:
+              only: /.*/
+          requires:
+            - lint
       - integrationTests:
-        requires:
-          - testChart
+          filters:
+            tags:
+              only: /.*/
+          requires:
+            - buildImage
+      - publishImage:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*/
+          requires:
+            - buildImage
+            - integrationTests
       - publishChart:
-        requires:
-          - integrationTests
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*/
+          requires:
+            - testChart
+            - integrationTests
+      - deploy:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*/
+          requires:
+            - publishImage
+            - publishChart
