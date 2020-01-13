@@ -28,6 +28,7 @@ mongodb:
   mongodbUsername: mongol
   mongodbPassword: "password"
   mongodbDatabase: cla
+
   replicaSet:
     enabled: true
     replicas:
@@ -89,8 +90,11 @@ mongodb:
       prometheus.io/scrape: "true"
       prometheus.io/port: "9216"
     serviceMonitor:
+      {{ if ne .Values.environment "ci" }}
       enabled: true
-
+      {{ else }}
+      enabled: false
+      {{ end }}
 prometheus-mongodb-exporter:
   mongodb:
     uri: mongodb://user:pass@host1:port/database
@@ -105,6 +109,7 @@ service:
   type: ClusterIP
   port: 80
 
+
 resources:
   limits:
     cpu: 100m
@@ -116,4 +121,8 @@ resources:
 metrics:
   enabled: true
   serviceMonitor:
+  {{ if ne .Values.environment "ci" }}
     enabled: true
+  {{ else }}
+    enabled: false
+  {{ end }}
