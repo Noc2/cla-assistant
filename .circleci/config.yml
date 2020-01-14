@@ -11,6 +11,20 @@ jobs:
           command: |
             /scripts/build-image.sh web3f/cla-assistant .
 
+  chartLint:
+    docker:
+      - image: web3f/ci-commons:v1.7.1
+    steps:
+      - checkout
+      - run:
+          description: helm lint
+          command: |
+            helm lint ./charts/cla
+      - run:
+          description: helm template
+          command: |
+            helm template ./charts/cla
+
   integrationTests:
     docker:
       - image: web3f/ci-commons:v1.7.1
@@ -60,12 +74,17 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - chartLint:
+          filters:
+            tags:
+              only: /.*/
       - integrationTests:
           filters:
             tags:
               only: /.*/
           requires:
             - buildImage
+            - chartLint
       - publishImage:
           filters:
             branches:
@@ -73,7 +92,6 @@ workflows:
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
           requires:
-            - buildImage
             - integrationTests
       - publishChart:
           filters:
