@@ -1,14 +1,6 @@
 version: 2
 
 jobs:
-  lint:
-    docker:
-      - image: circleci/node:10.15
-    steps:
-      - checkout
-      - run: yarn
-      - run: yarn lint
-
   buildImage:
     docker:
       - image: web3f/ci-commons:v1.7.1
@@ -18,6 +10,20 @@ jobs:
       - run:
           command: |
             /scripts/build-image.sh web3f/cla-assistant .
+
+  chartLint:
+    docker:
+      - image: web3f/ci-commons:v1.7.1
+    steps:
+      - checkout
+      - run:
+          description: helm lint
+          command: |
+            helm lint ./charts/cla
+      - run:
+          description: helm template
+          command: |
+            helm template ./charts/cla
 
   integrationTests:
     docker:
@@ -64,22 +70,21 @@ workflows:
   version: 2
   test_and_deploy:
     jobs:
-      - lint:
-          filters:
-            tags:
-              only: /.*/
       - buildImage:
           filters:
             tags:
               only: /.*/
-          requires:
-            - lint
+      - chartLint:
+          filters:
+            tags:
+              only: /.*/
       - integrationTests:
           filters:
             tags:
               only: /.*/
           requires:
             - buildImage
+            - chartLint
       - publishImage:
           filters:
             branches:

@@ -1,0 +1,122 @@
+# Default values for cla-assistant.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image:
+  repository: web3f
+  tag: 0.0.1
+  pullPolicy: IfNotPresent
+
+
+claAssistant:
+  host: cla.w3f.tech
+  port: 5000
+  hostPort:
+  protocol:
+
+github:
+  client:
+  user:
+  secret:
+  password:
+  token:
+
+mongodb:
+  ## MongoDB admin password
+  ## ref: https://github.com/bitnami/bitnami-docker-mongodb/blob/master/README.md#setting-the-root-password-on-first-run
+  ##
+  mongodbRootPassword:
+  service:
+    port: 56985
+  mongodbUsername:
+  mongodbPassword:
+  mongodbDatabase:
+  replicaSet:
+    enabled: true
+    replicas:
+      secondary: 1
+      arbiter: 1
+    pdb:
+      enabled: true
+      minAvailable:
+        secondary: 1
+        arbiter: 1
+  resourcesArbiter:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+  securityContext:
+    enabled: true
+    fsGroup: 1001
+    runAsUser: 1001
+  livenessProbe:
+    enabled: true
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 6
+    successThreshold: 1
+  readinessProbe:
+    enabled: true
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 6
+    successThreshold: 1
+
+  metrics:
+    enabled: true
+    image:
+      registry: docker.io
+      repository: bitnami/mongodb-exporter
+      tag: 0.10.0-debian-9-r77
+      pullPolicy: IfNotPresent
+    livenessProbe:
+      enabled: true
+      initialDelaySeconds: 15
+      periodSeconds: 5
+      timeoutSeconds: 5
+      failureThreshold: 3
+      successThreshold: 1
+    readinessProbe:
+      enabled: true
+      initialDelaySeconds: 5
+      periodSeconds: 5
+      timeoutSeconds: 1
+      failureThreshold: 3
+      successThreshold: 1
+    podAnnotations:
+      prometheus.io/scrape: "true"
+      prometheus.io/port: "9216"
+    serviceMonitor:
+      enabled: true
+prometheus-mongodb-exporter:
+  mongodb:
+    uri:
+
+
+replicaCount: 2
+
+serviceAccount:
+  create: true
+
+service:
+  type: ClusterIP
+  port: 80
+
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true

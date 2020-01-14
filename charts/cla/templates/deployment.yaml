@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "cla.fullname" . }}
+  labels:
+    {{- include "cla.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "cla.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "cla.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "cla.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}/cla-assistant:0.0.1"
+          imagePullPolicy: IfNotPresent
+          env:
+          - name: HOST
+            value: {{ .Values.claAssistant.host | default "example.com" }}
+          - name: GITHUB_CLIENT
+            value: {{ .Values.github.client | default "CLIENT" }}
+          - name: GITHUB_USER
+            value: {{ .Values.github.user | default "USER" }}
+          - name: PROTOCOL
+            value: http
+          - name: GITHUB_ADMIN_USERS
+            value: {{ .Values.github.user | default "GITHUB_ADMIN_USERS" }}
+          - name: GITHUB_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: '{{ template "cla.fullname" . }}-github-credentials'
+                key: secret
+          - name: GITHUB_PASS
+            valueFrom:
+              secretKeyRef:
+                name: '{{ template "cla.fullname" . }}-github-credentials'
+                key: pass
+          - name: GITHUB_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: '{{ template "cla.fullname" . }}-github-credentials'
+                key: token
+          - name: MONGODB
+            valueFrom:
+              secretKeyRef:
+                name: '{{ template "cla.fullname" . }}-mongodb-credentials'
+                key: uri
+          ports:
+          - containerPort: {{ .Values.claAssistant.port }}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.claAssistant.port }}
+            initialDelaySeconds: 3
+            timeoutSeconds: 3
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}

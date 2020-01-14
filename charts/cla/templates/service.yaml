@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "cla.fullname" . }}
+  labels:
+    {{- include "cla.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    -  port: {{ .Values.claAssistant.port }}
+  selector:
+    {{- include "cla.selectorLabels" . | nindent 4 }}
