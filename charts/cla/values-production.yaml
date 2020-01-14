@@ -99,7 +99,7 @@ mongodb:
       prometheus.io/scrape: "true"
       prometheus.io/port: "9216"
     serviceMonitor:
-      enabled: false
+      enabled: true
 
 replicaCount: 1
 
@@ -122,4 +122,4 @@ resources:
 metrics:
   enabled: true
   serviceMonitor:
-    enabled: false
+    enabled: true
