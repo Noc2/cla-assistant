@@ -33,9 +33,9 @@ spec:
           - name: PROTOCOL
             value: {{ .Values.claAssistant.protocol | default "http" }}
           - name: PORT
-            value: {{ .Values.claAssistant.port | quote | default "80" }}
+            value: {{ .Values.claAssistant.port | default 80 }}
           - name: HOST_PORT
-            value: {{ .Values.claAssistant.hostPort | quote | default "8080" }}
+            value: {{ .Values.claAssistant.hostPort | default 8080 }}
           - name: GITHUB_ADMIN_USERS
             value: {{ .Values.github.user | default "GITHUB_ADMIN_USERS" }}
           - name: GITHUB_SECRET
