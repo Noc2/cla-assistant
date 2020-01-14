@@ -8,10 +8,10 @@ metadata:
 spec:
   tls:
   - hosts:
-      - {{ .Values.claAssistant.host | default "example.com" }}
+      - {{ .Values.claAssistant.host | default "cla.w3f.tech" }}
     secretName: {{ include "cla.fullname" . }}-tls
   rules:
-  - host: {{ .Values.claAssistant.host | default "example.com" }}
+  - host: {{ .Values.claAssistant.host | default "cla.w3f.tech" }}
     http:
       paths:
       - path: /

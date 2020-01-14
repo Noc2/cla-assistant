@@ -13,7 +13,7 @@ production:
   enabled: false
 
 claAssistant:
-  host:
+  host: cla.w3f.tech
   port: 5000
   hostPort:
   protocol:

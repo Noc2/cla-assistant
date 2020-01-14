@@ -7,7 +7,6 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - name: http
-      containerPort: {{ .Values.claAssistant.port }}
+    - containerPort: 5000
   selector:
     {{- include "cla.selectorLabels" . | nindent 4 }}
