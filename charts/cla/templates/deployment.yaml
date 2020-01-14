@@ -55,7 +55,7 @@ spec:
                 name: '{{ template "cla.fullname" . }}-mongodb-credentials'
                 key: uri
           ports:
-          - containerPort: 5000
+          - containerPort: {{ .Values.claAssistant.port }}
           livenessProbe:
             httpGet:
               path: /

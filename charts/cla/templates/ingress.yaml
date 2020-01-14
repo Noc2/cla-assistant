@@ -17,4 +17,4 @@ spec:
       - path: /
         backend:
           serviceName: {{ include "cla.fullname" . }}
-          servicePort: 5000
+          servicePort: {{ .Values.claAssistant.port }}
