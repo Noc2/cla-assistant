@@ -17,13 +17,53 @@ jobs:
     steps:
       - checkout
       - run:
+          description: create lint command
+          command: |
+CMD=$(cat <<-END
+helm lint --set \
+environment="ci",\
+claAssistant.host=$CLA_ASSISTANT_HOST,\
+claAssistant.protocol=$PROTOCOL,\
+claAssistant.port=$PORT,\
+claAssistant.hostPort=$HOST_PORT,\
+github.secret=$GITHUB_SECRET,\
+github.password=$GITHUB_PASSWORD,\
+github.token=$GITHUB_TOKEN,\
+mongodb.mongodbRootPassword=$MONGODB_ROOT_PASSWORD,\
+mongodb.mongodbUsername=$MONGODB_USERNAME,\
+mongodb.mongodbPassword=$MONGODB_PASSWORD,\
+mongodb.mongodbDatabase=$MONGODB_DATABASE \
+ ./charts/cla/.
+END
+)
+      - run:
           description: helm lint
           command: |
-            helm lint ./charts/cla
+            eval $CMD
+      - run:
+          description: create template command
+          command: |
+CMD=$(cat <<-END
+helm template --set \
+environment="ci",\
+claAssistant.host=$CLA_ASSISTANT_HOST,\
+claAssistant.protocol=$PROTOCOL,\
+claAssistant.port=$PORT,\
+claAssistant.hostPort=$HOST_PORT,\
+github.secret=$GITHUB_SECRET,\
+github.password=$GITHUB_PASSWORD,\
+github.token=$GITHUB_TOKEN,\
+mongodb.mongodbRootPassword=$MONGODB_ROOT_PASSWORD,\
+mongodb.mongodbUsername=$MONGODB_USERNAME,\
+mongodb.mongodbPassword=$MONGODB_PASSWORD,\
+mongodb.mongodbDatabase=$MONGODB_DATABASE \
+ ./charts/cla/.
+END
+)
       - run:
           description: helm template
           command: |
-            helm template ./charts/cla
+            eval $CMD
 
   integrationTests:
     docker:
