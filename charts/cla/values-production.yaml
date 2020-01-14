@@ -13,7 +13,7 @@ production:
 
 claAssistant:
   host:
-  port:
+  port: 5000
   hostPort:
   protocol:
 

@@ -56,7 +56,13 @@ spec:
                 key: uri
           ports:
             - name: http
-              containerPort: {{ .Values.port | default 80 }}
+              containerPort: {{ .Values.claAssistant.port }}
               protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.claAssistant.port }}
+            initialDelaySeconds: 3
+            timeoutSeconds: 3
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

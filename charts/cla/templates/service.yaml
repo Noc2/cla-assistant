@@ -9,7 +9,6 @@ spec:
   ports:
     - name: cla
       port: {{ .Values.service.port }}
-      nodePort: {{ .Values.service.nodeport }}
 
   selector:
     {{- include "cla.selectorLabels" . | nindent 4 }}
