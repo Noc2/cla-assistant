@@ -16,5 +16,5 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: cla-backend
-          servicePort: 80
+          serviceName: {{ include "cla.fullname" . }}
+          servicePort: 5000
