@@ -9,8 +9,8 @@ image:
 
 
 claAssistant:
-  host:
-  port:
+  host: cla.w3f.tech
+  port: 5000
   hostPort:
   protocol:
 
