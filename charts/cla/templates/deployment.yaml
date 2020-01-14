@@ -21,7 +21,7 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}/cla-assistant"
+          image: "{{ .Values.image.repository }}/cla-assistant:latest"
           imagePullPolicy: IfNotPresent
           env:
           - name: HOST
