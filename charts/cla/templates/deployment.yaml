@@ -25,17 +25,13 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
           - name: HOST
-            value: {{ .Values.claAssistant.host }}
+            value: {{ .Values.claAssistant.host | default "example.com" }}
           - name: GITHUB_CLIENT
             value: {{ .Values.github.client | default "CLIENT" }}
           - name: GITHUB_USER
             value: {{ .Values.github.user | default "USER" }}
           - name: PROTOCOL
-            value: {{ .Values.claAssistant.protocol | default "http" }}
-          - name: PORT
-            value: {{ .Values.claAssistant.port | default 80 }}
-          - name: HOST_PORT
-            value: {{ .Values.claAssistant.hostPort | default 8080 }}
+            value: http
           - name: GITHUB_ADMIN_USERS
             value: {{ .Values.github.user | default "GITHUB_ADMIN_USERS" }}
           - name: GITHUB_SECRET

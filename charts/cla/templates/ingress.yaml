@@ -8,13 +8,13 @@ metadata:
 spec:
   tls:
   - hosts:
-      - {{ .Values.claAssistant.host }}
+      - {{ .Values.claAssistant.host | default "example.com" }}
     secretName: {{ include "cla.fullname" . }}-tls
   rules:
-  - host: {{ .Values.claAssistant.host }}
+  - host: {{ .Values.claAssistant.host | default "example.com" }}
     http:
       paths:
       - path: /
         backend:
           serviceName: cla-backend
-          servicePort: {{ .Values.claAssistant.hostPort }}
+          servicePort: 80
