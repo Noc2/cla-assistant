@@ -7,7 +7,9 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      name: cla
+    - name: cla
+      port: {{ .Values.service.port }}
+      nodePort: {{ .Values.service.nodeport }}
+
   selector:
     {{- include "cla.selectorLabels" . | nindent 4 }}
