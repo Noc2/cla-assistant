@@ -9,4 +9,4 @@
                              mongodb.mongodbUsername=$MONGODB_USERNAME,\
                              mongodb.mongodbPassword=$MONGODB_PASSWORD,\
                              mongodb.mongodbDatabase=$MONGODB_DATABASE \
-                             -f ./charts/cla/production-values.yaml cla w3f/cla-assistant"
+                             cla w3f/cla-assistant"
