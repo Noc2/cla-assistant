@@ -10,13 +10,12 @@ image:
   pullPolicy: IfNotPresent
 
 production:
-  enabled: false
+  enabled: true
 
 claAssistant:
   host: cla.w3f.tech
   port: 5000
-  hostPort:
-  protocol:
+  uri: mongodb://username:password@cla-mongodb/db
 
 github:
   client:
@@ -29,10 +28,6 @@ mongodb:
   mongodbRootPassword:
   service:
     port: 27017
-  mongodbUsername:
-  mongodbPassword:
-  mongodbDatabase:
-
 
   image:
     registry: docker.io
