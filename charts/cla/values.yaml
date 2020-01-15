@@ -1,7 +1,7 @@
 # Default values for cla-assistant.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-domain: cla.example.com
+domain: cla.w3f.tech
 environment: production
 
 image:
