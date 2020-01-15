@@ -56,11 +56,6 @@ spec:
                 key: uri
           ports:
           - containerPort: {{ .Values.claAssistant.port }}
-          livenessProbe:
-            httpGet:
-              path: /
-              port: {{ .Values.claAssistant.port }}
-            initialDelaySeconds: 3
-            timeoutSeconds: 3
+
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
