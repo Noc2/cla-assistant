@@ -26,6 +26,14 @@ github:
   token:
 
 mongodb:
+  mongodbRootPassword:
+  service:
+    port: 27017
+  mongodbUsername:
+  mongodbPassword:
+  mongodbDatabase:
+
+
   image:
     registry: docker.io
     repository: bitnami/mongodb
