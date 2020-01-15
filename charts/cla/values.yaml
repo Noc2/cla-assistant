@@ -119,6 +119,6 @@ resources:
     memory: 128Mi
 
 metrics:
-  enabled: true
+  enabled: false
   serviceMonitor:
     enabled: false
