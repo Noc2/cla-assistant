@@ -128,10 +128,6 @@ mongodb:
     serviceMonitor:
       enabled: false
 
-
-
-
-
 replicaCount: 1
 
 serviceAccount:
@@ -141,9 +137,6 @@ service:
   type: ClusterIP
 
 resources:
-  limits:
-    cpu: 100m
-    memory: 128Mi
   requests:
     cpu: 100m
     memory: 128Mi
