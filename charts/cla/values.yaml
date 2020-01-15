@@ -76,7 +76,7 @@ mongodb:
     failureThreshold: 6
     successThreshold: 1
   metrics:
-    enabled: true
+    enabled: false
     image:
       registry: docker.io
       repository: bitnami/mongodb-exporter
