@@ -26,40 +26,62 @@ github:
   token:
 
 mongodb:
-  mongodbRootPassword:
-  service:
-    port: 56985
-  mongodbUsername:
-  mongodbPassword:
-  mongodbDatabase:
+  image:
+    registry: docker.io
+    repository: bitnami/mongodb
+    tag: 4.0.14-debian-9-r0
+    pullPolicy: IfNotPresent
 
-  replicaSet:
+    debug: false
+
+  volumePermissions:
+    enabled: false
+    image:
+      registry: docker.io
+      repository: bitnami/minideb
+      tag: stretch
+      pullPolicy: Always
+  usePassword: true
+  mongodbEnableIPv6: false
+  mongodbDirectoryPerDB: false
+
+  mongodbSystemLogVerbosity: 0
+  mongodbDisableSystemLog: false
+
+  securityContext:
     enabled: true
+    fsGroup: 1001
+    runAsUser: 1001
+
+  clusterDomain: cluster.local
+
+  service:
+    type: ClusterIP
+    port: 27017
+  replicaSet:
+    enabled: false
+    useHostnames: true
+    name: rs0
     replicas:
       secondary: 1
       arbiter: 1
     pdb:
       enabled: true
       minAvailable:
+        primary: 1
         secondary: 1
         arbiter: 1
-  resourcesArbiter:
-    limits:
-      cpu: 500m
-      memory: 512Mi
-    requests:
-      cpu: 100m
-      memory: 256Mi
-  securityContext:
-    enabled: true
-    fsGroup: 1001
-    runAsUser: 1001
+  updateStrategy:
+    type: RollingUpdate
+
   persistence:
     enabled: true
     mountPath: /bitnami/mongodb
+    subPath: ""
     accessModes:
       - ReadWriteOnce
     size: 8Gi
+    annotations: {}
 
   livenessProbe:
     enabled: true
@@ -75,32 +97,40 @@ mongodb:
     timeoutSeconds: 5
     failureThreshold: 6
     successThreshold: 1
+
   metrics:
     enabled: false
+
     image:
       registry: docker.io
       repository: bitnami/mongodb-exporter
       tag: 0.10.0-debian-9-r77
       pullPolicy: IfNotPresent
     livenessProbe:
-      enabled: true
+      enabled: false
       initialDelaySeconds: 15
       periodSeconds: 5
       timeoutSeconds: 5
       failureThreshold: 3
       successThreshold: 1
     readinessProbe:
-      enabled: true
+      enabled: false
       initialDelaySeconds: 5
       periodSeconds: 5
       timeoutSeconds: 1
       failureThreshold: 3
       successThreshold: 1
+
     podAnnotations:
       prometheus.io/scrape: "true"
       prometheus.io/port: "9216"
+
     serviceMonitor:
       enabled: false
+
+
+
+
 
 replicaCount: 1
 

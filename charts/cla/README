@@ -30,12 +30,9 @@ mongodb.mongodbDatabase=$MONGODB_DATABASE \
 cla ./charts/cla/.
 
 
-helm template --set \
+helm install --set \
 environment="ci",\
 claAssistant.host="cla.test.com",\
-claAssistant.protocol="http",\
-claAssistant.port=80,\
-claAssistant.hostPort=80,\
 github.secret="GITHUB_SECRET",\
 github.password="GITHUB_PASSWORD",\
 github.token="GITHUB_TOKEN",\
@@ -43,4 +40,4 @@ mongodb.mongodbRootPassword="MONGODB_ROOT_PASSWORD",\
 mongodb.mongodbUsername="MONGODB_USERNAME",\
 mongodb.mongodbPassword="MONGODB_PASSWORD",\
 mongodb.mongodbDatabase="MONGODB_DATABASE" \
- ./charts/cla/.
+cla2 .
