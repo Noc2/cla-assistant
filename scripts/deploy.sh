@@ -1,12 +1,3 @@
 #!/bin/sh
 
-/scripts/deploy.sh -t helm -c engineering \
--a "--set image.tag=${CIRCLE_TAG},\
-github.secret=$GITHUB_SECRET,\
-github.password=$GITHUB_PASSWORD,\
-github.token=$GITHUB_TOKEN,\
-mongodb.mongodbRootPassword=$MONGODB_ROOT_PASSWORD,\
-mongodb.mongodbUsername=$MONGODB_USERNAME,\
-mongodb.mongodbPassword=$MONGODB_PASSWORD,\
-mongodb.mongodbDatabase=$MONGODB_DATABASE \
-cla ./charts/cla/."
+/scripts/deploy.sh -t helm -c engineering -a "--set image.tag=${CIRCLE_TAG} --name="cla" --set claAssistant.host=$CLA_ASSISTANT_HOST --set github.secret=$GITHUB_SECRET --set github.password=$GITHUB_PASSWORD --set github.token=$GITHUB_TOKEN ./charts/cla/.
