@@ -6,4 +6,4 @@
  --set github.token=$GITHUB_TOKEN \
  --set mongodb.mongodbRootPassword=$CLA_DB_PASS \
  --set claAssistant.uri=$CLA_DB_URL \
- --name cla ./charts/cla/."
+ cla ./charts/cla/."
