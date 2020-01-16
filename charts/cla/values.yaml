@@ -110,14 +110,14 @@ mongodb:
       tag: 0.10.0-debian-9-r77
       pullPolicy: IfNotPresent
     livenessProbe:
-      enabled: false
+      enabled: true
       initialDelaySeconds: 15
       periodSeconds: 5
       timeoutSeconds: 5
       failureThreshold: 3
       successThreshold: 1
     readinessProbe:
-      enabled: false
+      enabled: true
       initialDelaySeconds: 5
       periodSeconds: 5
       timeoutSeconds: 1
@@ -129,7 +129,7 @@ mongodb:
       prometheus.io/port: "9216"
 
     serviceMonitor:
-      enabled: false
+      enabled: true
 
 replicaCount: 1
 
@@ -160,6 +160,6 @@ readinessProbe:
   successThreshold: 1
 
 metrics:
-  enabled: false
+  enabled: true
   serviceMonitor:
-    enabled: false
+    enabled: true
