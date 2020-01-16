@@ -16,7 +16,7 @@ claAssistant:
   host: cla.w3f.tech
   protocol: https
   port: 5000
-  uri: mongodb://cla:password@cla-mongodb:27017/cla
+  uri: mongo "mongodb://cla:abcde@cla-mongodb:27017/cla"
 
 github:
   client:
@@ -26,11 +26,10 @@ github:
   admins:
 
 mongodb:
-  mongodbUsername:
+  mongodbUsername: cla
+  mongodbDatabase: cla
   mongodbPassword:
-  mongodbDatabase:
-  mongodbRootPassword:
-  mongodbDirectoryPerDB: true
+
   service:
     port: 27017
 
@@ -40,7 +39,7 @@ mongodb:
     tag: 4.0.14-debian-9-r0
     pullPolicy: IfNotPresent
 
-    debug: false
+    debug: true
 
   volumePermissions:
     enabled: false
