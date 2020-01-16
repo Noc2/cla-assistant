@@ -9,4 +9,6 @@
  --set github.admins=$GITHUB_ADMINS\
  --set mongodb.mongodbRootPassword=$CLA_DB_PASS\
  --set claAssistant.uri=$CLA_DB_URL\
+ --set metrics.serviceMonitor.enabled=$SERVICE_MONITOR\
+ --set mongodb.metrics.serviceMonitor.enabled=$SERVICE_MONITOR\
  cla ./charts/cla/."
