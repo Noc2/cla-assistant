@@ -16,7 +16,7 @@ claAssistant:
   host: cla.w3f.tech
   protocol: https
   port: 5000
-  uri: mongodb://username:password@cla-mongodb/db
+  uri: mongodb://cla:password@cla-mongodb:27017/cla
 
 github:
   client:
@@ -26,6 +26,9 @@ github:
   admins:
 
 mongodb:
+  mongodbUsername: cla
+  mongodbPassword: password
+  mongodbDatabase: cla
   mongodbRootPassword:
   service:
     port: 27017
