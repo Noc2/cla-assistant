@@ -26,10 +26,11 @@ github:
   admins:
 
 mongodb:
-  mongodbUsername: cla
-  mongodbPassword: password
-  mongodbDatabase: cla
+  mongodbUsername:
+  mongodbPassword:
+  mongodbDatabase:
   mongodbRootPassword:
+  mongodbDirectoryPerDB: true
   service:
     port: 27017
 
