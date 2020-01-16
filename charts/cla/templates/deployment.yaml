@@ -26,29 +26,33 @@ spec:
           env:
           - name: HOST
             value: {{ .Values.claAssistant.host | default "example.com" }}
-          - name: GITHUB_CLIENT
-            value: {{ .Values.github.client | default "CLIENT" }}
-          - name: GITHUB_USER
-            value: {{ .Values.github.user | default "USER" }}
           - name: PROTOCOL
-            value: http
-          - name: GITHUB_ADMIN_USERS
-            value: {{ .Values.github.user | default "GITHUB_ADMIN_USERS" }}
+            value: https
+          - name: GITHUB_CLIENT
+            valueFrom:
+              secretKeyRef:
+                name: '{{ template "cla.fullname" . }}-github-credentials'
+                key: client
           - name: GITHUB_SECRET
             valueFrom:
               secretKeyRef:
                 name: '{{ template "cla.fullname" . }}-github-credentials'
                 key: secret
-          - name: GITHUB_PASS
+          - name: GITHUB_USER
             valueFrom:
               secretKeyRef:
                 name: '{{ template "cla.fullname" . }}-github-credentials'
-                key: pass
+                key: user
           - name: GITHUB_TOKEN
             valueFrom:
               secretKeyRef:
                 name: '{{ template "cla.fullname" . }}-github-credentials'
                 key: token
+          - name: GITHUB_ADMIN
+            valueFrom:
+              secretKeyRef:
+                name: '{{ template "cla.fullname" . }}-github-credentials'
+                key: admins
           - name: MONGODB
             valueFrom:
               secretKeyRef:
