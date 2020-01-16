@@ -14,15 +14,16 @@ production:
 
 claAssistant:
   host: cla.w3f.tech
+  protocol: https
   port: 5000
   uri: mongodb://username:password@cla-mongodb/db
 
 github:
   client:
-  user:
   secret:
-  password:
+  user:
   token:
+  admins:
 
 mongodb:
   mongodbRootPassword:
@@ -102,7 +103,7 @@ mongodb:
     successThreshold: 1
 
   metrics:
-    enabled: false
+    enabled: true
 
     image:
       registry: docker.io
