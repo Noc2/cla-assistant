@@ -145,13 +145,6 @@ resources:
     cpu: 100m
     memory: 128Mi
 
-livenessProbe:
-  enabled: true
-  initialDelaySeconds: 30
-  periodSeconds: 10
-  timeoutSeconds: 5
-  failureThreshold: 6
-  successThreshold: 1
 metrics:
   enabled: true
   serviceMonitor:
