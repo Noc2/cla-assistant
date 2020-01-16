@@ -129,7 +129,7 @@ mongodb:
       prometheus.io/port: "9216"
 
     serviceMonitor:
-      enabled: true
+      enabled: false
 
 replicaCount: 1
 
@@ -162,4 +162,4 @@ readinessProbe:
 metrics:
   enabled: true
   serviceMonitor:
-    enabled: true
+    enabled: false
