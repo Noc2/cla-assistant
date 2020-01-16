@@ -14,7 +14,7 @@ production:
 
 claAssistant:
   host: cla.w3f.tech
-  protocol: "https"
+  protocol: https
   port: 5000
   uri: mongodb://username:password@cla-mongodb/db
 
