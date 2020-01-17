@@ -43,6 +43,11 @@ spec:
               secretKeyRef:
                 name: '{{ template "cla.fullname" . }}-github-credentials'
                 key: user
+          - name: GITHUB_PASS
+            valueFrom:
+              secretKeyRef:
+                name: '{{ template "cla.fullname" . }}-github-credentials'
+                key: token
           - name: GITHUB_TOKEN
             valueFrom:
               secretKeyRef:
